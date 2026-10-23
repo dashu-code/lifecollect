@@ -1,0 +1,13 @@
+# 统一用 LF 存储，避免 Windows/macOS 混用时整文件 diff
+* text=auto eol=lf
+
+# 图片按二进制处理
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+
+# 档案包按二进制处理
+*.lfc binary
+*.db binary

@@ -1,0 +1,524 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lifecollect — 手册</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<div class="frame">
+
+  <aside class="rail">
+    <div class="rail-mark">
+      <div class="mark-red"></div>
+      <div class="mark-title">lifecollect</div>
+      <div class="mark-sub">数字生命档案 · 第一代</div>
+    </div>
+
+    <a class="nav-manual" id="nav-manual" href="#manual">
+      <span class="nav-manual-kicker">从这里开始</span>
+      <span class="nav-manual-title">手册与向导</span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a class="nav-item" data-view="overview" href="#overview">
+        <span class="nav-num">01</span><span class="nav-label">概览</span>
+      </a>
+      <a class="nav-item" data-view="import" href="#import">
+        <span class="nav-num">02</span><span class="nav-label">导入材料</span>
+      </a>
+      <a class="nav-item" data-view="records" href="#records">
+        <span class="nav-num">03</span><span class="nav-label">记录</span>
+      </a>
+      <a class="nav-item" data-view="search" href="#search">
+        <span class="nav-num">04</span><span class="nav-label">检索</span>
+      </a>
+      <a class="nav-item" data-view="documents" href="#documents">
+        <span class="nav-num">05</span><span class="nav-label">呈现</span>
+      </a>
+      <a class="nav-item" data-view="consent" href="#consent">
+        <span class="nav-num">06</span><span class="nav-label">授权</span>
+      </a>
+      <a class="nav-item" data-view="security" href="#security">
+        <span class="nav-num">07</span><span class="nav-label">加密</span>
+      </a>
+    </nav>
+
+    <div class="rail-foot">
+      <div class="kicker">当前档案</div>
+      <div class="rail-subject" id="rail-subject">尚未建立</div>
+      <div class="rail-level" id="rail-level">—</div>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+
+    <header class="topbar">
+      <span class="kicker" id="crumb">手册与向导</span>
+      <div class="topbar-right">
+        <span class="meta" id="top-status">读取中</span>
+        <span class="rule-v"></span>
+        <span class="meta mono" id="top-root">—</span>
+      </div>
+    </header>
+
+    <!-- ============ 手册与向导 ============ -->
+    <section class="view" id="view-manual">
+      <div class="manual-layout">
+        <nav class="manual-toc">
+          <div class="kicker">七章</div>
+          <ol class="toc-list" id="toc-list"></ol>
+          <div class="toc-progress">
+            <div class="kicker">进度</div>
+            <div class="toc-bar"><span id="toc-bar-fill"></span></div>
+            <div class="meta" id="toc-progress-text">第 1 章 / 共 7 章</div>
+          </div>
+          <div class="toc-foot">
+            <a href="#overview" class="toc-skip">先跳过，直接进工作台 →</a>
+          </div>
+        </nav>
+        <article class="manual-body" id="manual-body"></article>
+      </div>
+    </section>
+
+    <!-- ============ 概览 ============ -->
+    <section class="view" id="view-overview" hidden>
+      <div id="overview-empty"></div>
+      <div id="overview-real" hidden>
+        <div class="hero">
+          <div class="hero-text">
+            <div class="kicker">档案状态</div>
+            <h1 class="display" id="hero-subject">—</h1>
+            <p class="lede" id="hero-lede"></p>
+          </div>
+          <div class="hero-diag" aria-hidden="true">
+            <div class="diag-grid"></div>
+            <div class="diag-bar diag-bar-a"></div>
+            <div class="diag-bar diag-bar-b"></div>
+            <div class="diag-bar diag-bar-c"></div>
+            <div class="diag-dot"></div>
+          </div>
+        </div>
+        <div class="metrics" id="metrics"></div>
+        <div class="section-head">
+          <span class="kicker">档案结构</span>
+          <span class="meta">权威性从左到右递减</span>
+        </div>
+        <div class="archive-map" id="archive-map"></div>
+        <div class="section-head">
+          <span class="kicker">安全级别</span>
+          <span class="meta">选择时必须同时看两栏</span>
+        </div>
+        <div class="levels" id="levels"></div>
+      </div>
+    </section>
+
+'    <!-- ============ 导入材料 ============ -->
+    <section class="view" id="view-import" hidden>
+      <div class="page-head">
+        <h2 class="display-2">导入材料</h2>
+        <p class="lede-sm">把真实材料放进档案。导入之后会自动标注、建索引、重写清单——
+          不需要再去命令行跑任何东西。</p>
+      </div>
+
+      <div id="import-empty"></div>
+
+      <div id="import-real" hidden>
+        <!-- 步骤 1：来源 -->
+        <div class="import-step">
+          <div class="step-head">
+            <span class="step-index">1</span>
+            <div>
+              <div class="step-title">这些材料是什么</div>
+              <div class="step-hint">来源影响标注方式，也影响它们被当成什么级别的证据。</div>
+            </div>
+          </div>
+          <div class="source-choice" id="source-choice"></div>
+        </div>
+
+        <!-- 步骤 2：文件 -->
+        <div class="import-step">
+          <div class="step-head">
+            <span class="step-index">2</span>
+            <div>
+              <div class="step-title">选择文件或文件夹</div>
+              <div class="step-hint">
+                支持 CSV、TXT、JSON、JSONL、HTML、MD。也可以直接选一个文件夹，
+                里面的语音、图片、视频会被登记。
+              </div>
+            </div>
+          </div>
+          <div class="pick-row">
+            <button class="btn btn-solid" id="pick-files">选择文件…</button>
+            <button class="btn" id="pick-folder">选择文件夹…</button>
+            <span class="meta" id="pick-note"></span>
+          </div>
+          <details class="details-block" id="manual-path-box">
+            <summary>或者直接粘贴路径</summary>
+            <input class="input" id="manual-paths" placeholder="每行一个路径，例如 D:\\导出\\聊天记录.csv">
+          </details>
+          <div class="picked-list" id="picked-list"></div>
+          <div class="peek-result" id="peek-result"></div>
+        </div>
+
+        <!-- 步骤 3：谁是我 -->
+        <div class="import-step">
+          <div class="step-head">
+            <span class="step-index">3</span>
+            <div>
+              <div class="step-title">哪个名字是你</div>
+              <div class="step-hint">
+                不填也没关系，但所有消息的方向会标成"未知"。
+                <strong>"不知道是谁"和"知道是对方"是两回事</strong>——猜错会让下游
+                把别人的话当成档案主人的。
+              </div>
+            </div>
+          </div>
+          <div class="self-picker" id="self-picker">
+            <div class="self-empty">选完文件后，这里会列出出现过的名字，点一下就能标记为你。</div>
+          </div>
+          <input class="input self-input" id="self-input" placeholder="或者手动输入你的昵称，多个用逗号隔开">
+          <details class="details-block">
+            <summary>高级：来源可信级别</summary>
+            <div class="level-hint" id="level-hint">
+              级别 2（默认）：手机端整体备份 / 直接导出。
+              如果能直接读取数据库（级别 1），时间精度和语音都会更好。
+            </div>
+          </details>
+        </div>
+
+        <!-- 执行 -->
+        <div class="import-actions">
+          <button class="btn btn-solid" id="do-import" disabled>开始导入</button>
+          <span class="action-log" id="import-log"></span>
+        </div>
+
+'        <div class="import-result" id="import-result"></div>
+
+        <!-- ============ AI 协助起草（最后面，可选） ============ -->
+        <details class="ai-panel" id="ai-panel">
+          <summary>
+            <span class="ai-summary-title">AI 协助起草</span>
+            <span class="ai-summary-note">可选 · 会联网 · 默认关闭</span>
+          </summary>
+
+          <div class="ai-warning">
+            <div class="kicker">先说清楚这件事</div>
+            <p><strong>这个功能会联网。</strong>档案的其他所有功能都在本机完成，
+              只有这里例外。启用后，你输入的「主题」和「依据」会发送给你配置的
+              AI 服务商（DeepSeek / OpenAI 等）。<strong>档案里的记录、授权内容、
+              密钥，一律不会上传。</strong></p>
+            <p><strong>AI 写的东西不是本人写的。</strong>它只能用来整理
+              <em>外部公开材料</em>（比如查一段公开报道、整理某个事件的公开信息）。
+              不要用它回忆你的私人经历——它会编，而且编得像真的。
+              所有草稿必须你逐句核对后才能保存，保存后会标记为「AI 协助起草」。</p>
+          </div>
+
+          <div id="ai-empty"></div>
+
+          <div id="ai-real" hidden>
+            <!-- 配置 -->
+            <div class="ai-section">
+              <div class="ai-section-head">
+                <span class="step-index">A</span>
+                <div>
+                  <div class="step-title">配置服务商</div>
+                  <div class="step-hint">API Key 加密后存在本地档案里，不会发给任何第三方。</div>
+                </div>
+              </div>
+              <div class="ai-config-grid">
+                <label class="ai-field">
+                  <span class="kicker">服务商</span>
+                  <select class="input" id="ai-provider"></select>
+                </label>
+                <label class="ai-field">
+                  <span class="kicker">模型</span>
+                  <input class="input" id="ai-model" placeholder="deepseek-chat">
+                </label>
+              </div>
+              <label class="ai-field ai-field-wide">
+                <span class="kicker">接口地址</span>
+                <input class="input" id="ai-baseurl" placeholder="https://api.deepseek.com/v1">
+              </label>
+              <label class="ai-field ai-field-wide">
+                <span class="kicker">API Key</span>
+                <input class="input" id="ai-key" type="password"
+                       placeholder="留空表示不修改已保存的 Key" autocomplete="new-password">
+              </label>
+              <div class="ai-config-actions">
+                <button class="btn" id="ai-save">保存配置</button>
+                <button class="btn" id="ai-test">测试连接</button>
+                <span class="ai-status" id="ai-status"></span>
+              </div>
+            </div>
+
+            <!-- 起草 -->
+            <div class="ai-section">
+              <div class="ai-section-head">
+                <span class="step-index">B</span>
+                <div>
+                  <div class="step-title">让它起草</div>
+                  <div class="step-hint">
+                    主题写清楚你要整理什么。依据里只放你确认过的事实，它会严格按依据写，
+                    没有依据的地方会标注「不确定」。
+                  </div>
+                </div>
+              </div>
+              <label class="ai-field ai-field-wide">
+                <span class="kicker">主题</span>
+                <input class="input" id="ai-topic"
+                       placeholder="例如：2019 年那次搬家的公开信息（城市、时间、原因）">
+              </label>
+              <label class="ai-field ai-field-wide">
+                <span class="kicker">事实依据（可选）</span>
+                <textarea class="textarea" id="ai-context" rows="5"
+                          placeholder="只放你确认过的事实。例如：2019 年 3 月从杭州搬到成都，因为工作调动。"></textarea>
+              </label>
+              <label class="ai-field ai-field-wide">
+                <span class="kicker">风格要求（可选）</span>
+                <input class="input" id="ai-style" placeholder="例如：简短，不要抒情">
+              </label>
+              <div class="ai-config-actions">
+                <button class="btn btn-solid" id="ai-draft">生成草稿</button>
+                <span class="ai-status" id="ai-draft-status"></span>
+              </div>
+            </div>
+
+            <!-- 批量整理：把已有记录归纳成摘要 -->
+            <div class="ai-section ai-digest">
+              <div class="ai-section-head">
+                <span class="step-index">D</span>
+                <div>
+                  <div class="step-title">批量整理已有材料</div>
+                  <div class="step-hint">
+                    让它读你<strong>已经导入</strong>的记录，归纳成时间线、人物、主题，
+                    并列出矛盾和信息缺口。每条结论后面会标出处记录 ID——
+                    <strong>你可以逐条核对</strong>。它只做归纳，不产生新事实。
+                  </div>
+                </div>
+              </div>
+
+              <div class="ai-config-grid">
+                <label class="ai-field">
+                  <span class="kicker">整理范围</span>
+                  <select class="input" id="digest-scope">
+                    <option value="usable">有信息量的记录（推荐）</option>
+                    <option value="self">只看本人发的</option>
+                    <option value="all">全部记录（贵）</option>
+                  </select>
+                </label>
+                <div class="ai-field">
+                  <span class="kicker">先算一下</span>
+                  <button class="btn" id="digest-estimate">估算成本</button>
+                </div>
+              </div>
+
+              <div class="digest-estimate" id="digest-estimate"></div>
+
+              <div class="ai-config-actions">
+                <button class="btn btn-solid" id="digest-run" disabled>开始整理</button>
+                <span class="ai-status" id="digest-status"></span>
+              </div>
+
+              <div id="digest-review" hidden>
+                <div class="section-head" style="margin-top:32px">
+                  <span class="kicker">核对摘要</span>
+                  <span class="meta">每条都要能追到出处记录</span>
+                </div>
+                <textarea class="textarea ai-draft-box" id="digest-text" rows="24"></textarea>
+                <div class="ai-config-actions">
+                  <button class="btn btn-solid" id="digest-commit">核对无误，保存进档案</button>
+                  <button class="btn" id="digest-discard">丢弃</button>
+                  <span class="ai-status" id="digest-commit-status"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 草稿审阅 -->
+            <div class="ai-section" id="ai-review" hidden>
+              <div class="ai-section-head">
+                <span class="step-index">C</span>
+                <div>
+                  <div class="step-title">逐句核对，改完才能保存</div>
+                  <div class="step-hint">
+                    下面是草稿，可以直接编辑。<strong>删掉任何你不确认的内容。</strong>
+                    保存后它会以「AI 协助起草」的身份进档案——这个标记会一直跟着它，
+                    不会混进"你写的东西"里。
+                  </div>
+                </div>
+              </div>
+              <textarea class="textarea ai-draft-box" id="ai-draft-text" rows="18"></textarea>
+              <div class="ai-config-actions">
+                <button class="btn btn-solid" id="ai-commit">确认无误，保存进档案</button>
+                <button class="btn" id="ai-discard">丢弃</button>
+                <span class="ai-status" id="ai-commit-status"></span>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>'
+
+'    <!-- ============ 记录 ============ -->
+    <section class="view" id="view-records" hidden>
+      <div class="page-head">
+        <h2 class="display-2">记录</h2>
+        <p class="lede-sm">每一条都带着它的分类依据和可信级别。分不清的那部分没有被硬塞进某一类。</p>
+      </div>
+      <div id="records-empty"></div>
+      <div id="records-real" hidden>
+        <div class="filters">
+          <div class="filter-group">
+            <span class="kicker">内容类型</span>
+            <div class="chips" id="kind-chips"></div>
+          </div>
+          <div class="filter-group">
+            <span class="kicker">谁说的</span>
+            <div class="chips" id="dir-chips"></div>
+          </div>
+        </div>
+        <div class="count-line"><span class="meta" id="records-count">—</span></div>
+        <div class="record-list" id="record-list"></div>
+      </div>
+    </section>
+
+    <!-- ============ 检索 ============ -->
+    <section class="view" id="view-search" hidden>
+      <div class="page-head">
+        <h2 class="display-2">检索</h2>
+        <p class="lede-sm">中文按字符级索引，单字、双字、跨词边界都能查。短语匹配要求连续，宁可漏不可错。</p>
+      </div>
+      <div id="search-empty"></div>
+      <div id="search-real" hidden>
+        <div class="search-box">
+          <input id="search-input" class="search-input" type="text"
+                 placeholder="输入关键词，例如：成本、不同意、换工作"
+                 autocomplete="off" spellcheck="false">
+          <button class="btn btn-solid" id="search-btn">检索</button>
+        </div>
+        <div class="search-opts">
+          <label class="check"><input type="checkbox" id="search-self"> 只搜本人发的</label>
+          <div class="chips chips-inline" id="search-kind-chips"></div>
+        </div>
+        <div class="count-line"><span class="meta" id="search-count"></span></div>
+        <div class="record-list" id="search-results"></div>
+      </div>
+    </section>
+
+    <!-- ============ 呈现 ============ -->
+    <section class="view" id="view-documents" hidden>
+      <div class="page-head">
+        <h2 class="display-2">呈现</h2>
+        <p class="lede-sm">这些文件是给人看的，不需要任何工具就能打开。其中《待处理问题》主动列出这份档案的毛病。</p>
+      </div>
+      <div id="documents-empty"></div>
+      <div class="doc-col" id="documents-real" hidden>
+        <div class="doc-tabs" id="doc-tabs"></div>
+        <article class="doc-body" id="doc-body"></article>
+      </div>
+    </section>
+
+    <!-- ============ 授权 ============ -->
+    <section class="view" id="view-consent" hidden>
+      <div class="page-head">
+        <h2 class="display-2">授权</h2>
+        <p class="lede-sm">任何使用本档案的人必须先读这里。未填写的项一律按禁止处理。
+          改完点保存，人类可读的授权声明会同步重写。</p>
+      </div>
+      <div id="consent-empty"></div>
+      <div id="consent-real" hidden>
+        <div class="section-head">
+          <span class="kicker">逐项授权</span>
+          <span class="meta" id="consent-summary">—</span>
+        </div>
+        <div class="consent-list" id="consent-list"></div>
+
+        <div class="section-head"><span class="kicker">签署</span></div>
+        <div class="consent-sign">
+          <div class="sign-field">
+            <label class="kicker" for="consent-signature">签名</label>
+            <input class="input" id="consent-signature" placeholder="你的名字" autocomplete="off">
+          </div>
+          <div class="sign-field">
+            <label class="kicker" for="consent-date">日期</label>
+            <input class="input" id="consent-date" placeholder="2026-10-17" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="consent-actions">
+          <button class="btn btn-solid" id="consent-save">保存授权声明</button>
+          <button class="btn" id="consent-bulk-allow">全选允许</button>
+          <button class="btn" id="consent-bulk-deny">全选禁止</button>
+          <span class="action-log" id="consent-log"></span>
+        </div>
+
+        <div class="section-head">
+          <span class="kicker">身后指令</span>
+          <span class="meta">你去世后，谁有权决定这份档案怎么用</span>
+        </div>
+        <textarea class="textarea" id="after-death" rows="16"></textarea>
+        <div class="consent-actions">
+          <button class="btn" id="after-death-save">保存身后指令</button>
+          <span class="action-log" id="after-death-log"></span>
+        </div>
+
+        <details class="details-block">
+          <summary>密钥托管方式（只读）</summary>
+          <pre class="readonly-pre" id="key-custody"></pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ 加密 ============ -->
+    <section class="view" id="view-security" hidden>
+      <div class="page-head">
+        <h2 class="display-2">加密</h2>
+        <p class="lede-sm">说明文件和授权目录永远明文——否则没人知道这是什么、谁能用。其余内容锁起来。</p>
+      </div>
+      <div id="security-empty"></div>
+      <div id="security-real" hidden>
+        <div class="security-status" id="security-status"></div>
+        <div class="section-head">
+          <span class="kicker">永远明文</span>
+          <span class="meta">设计约束，不是遗漏</span>
+        </div>
+        <div class="clear-list" id="clear-list"></div>
+        <div class="section-head"><span class="kicker">操作</span></div>
+        <div class="actions">
+          <div class="action-card">
+            <div class="action-title">加锁</div>
+            <p class="action-desc">加密所有含内容的文件。顺序是「加密 → 验证能解开 → 才删明文」。</p>
+            <div class="action-row">
+              <input type="password" id="lock-pw" class="input" placeholder="口令（standard 级别可留空）" autocomplete="off">
+              <button class="btn btn-solid" id="lock-btn">加锁</button>
+            </div>
+            <div class="action-log" id="lock-log"></div>
+          </div>
+          <div class="action-card">
+            <div class="action-title">解锁</div>
+            <p class="action-desc">把密文解回明文。默认保留密文，删密文需要另一步明确操作。</p>
+            <div class="action-row">
+              <input type="password" id="unlock-pw" class="input" placeholder="口令" autocomplete="off">
+              <button class="btn" id="unlock-btn">解锁</button>
+            </div>
+            <div class="action-log" id="unlock-log"></div>
+          </div>
+          <div class="action-card">
+            <div class="action-title">校验</div>
+            <p class="action-desc">逐文件验证密文能用这把钥匙解开，并核对原始哈希。不解出明文落盘。</p>
+            <div class="action-row">
+              <input type="password" id="verify-pw" class="input" placeholder="口令" autocomplete="off">
+              <button class="btn" id="verify-btn">校验</button>
+            </div>
+            <div class="action-log" id="verify-log"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>
